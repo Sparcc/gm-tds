@@ -1,0 +1,2 @@
+//x+=runSpeed; 
+beginMoving = true;
