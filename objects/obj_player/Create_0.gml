@@ -3,7 +3,7 @@ enum playerAnimation {
    walk = spr_player_walk,
    runreload = spr_player_runreload
    }
-beginMoving = true;
+playerMoving = true;
 playerSprinting = false;
 cooldown = 0;
 cooldownTimer = 4
