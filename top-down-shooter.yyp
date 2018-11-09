@@ -63,11 +63,35 @@
             }
         },
         {
+            "Key": "14f49d3e-80fa-4ca4-a581-52792edee6e4",
+            "Value": {
+                "id": "87e1f26b-e33d-4529-b4cc-a108f7aa0af1",
+                "resourcePath": "sprites\\spr_booty_bounce\\spr_booty_bounce.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "1962db42-dad0-44e3-b64b-84c66e483779",
             "Value": {
                 "id": "022b3aa8-85dc-4669-9640-5eb6cf18f0c0",
                 "resourcePath": "objects\\obj_flesh_impact\\obj_flesh_impact.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "1ba64cc9-4734-4b7f-b135-45c7ba22d6b7",
+            "Value": {
+                "id": "fb42e732-90b7-4e6b-95ea-02500e08d6b5",
+                "resourcePath": "objects\\obj_enemy\\obj_enemy.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "1ec8d699-4543-452c-96ce-2d57d17250d9",
+            "Value": {
+                "id": "0cede0ba-63a3-4a4b-a15d-97ba2a233ef9",
+                "resourcePath": "sprites\\spr_blood\\spr_blood.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -295,6 +319,14 @@
             }
         },
         {
+            "Key": "a9927892-0af9-4d6d-85ab-0bb93af10ed0",
+            "Value": {
+                "id": "3184bca4-3ce8-43f8-8806-bf1c7ad64f06",
+                "resourcePath": "objects\\obj_blood\\obj_blood.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "aacc8532-4a94-4cb3-aef5-cf2f4a7f1692",
             "Value": {
                 "id": "20998430-075c-456c-afe2-5efdc11fd38d",
@@ -356,6 +388,14 @@
                 "id": "fe4a3bdf-aaf0-43f7-8b99-227c03d95eee",
                 "resourcePath": "sprites\\spr_player_runreload\\spr_player_runreload.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "c79df2ca-6d02-4012-ad66-5f5a61a5a58f",
+            "Value": {
+                "id": "17c32108-4aaa-4ff2-a458-815226c78ade",
+                "resourcePath": "scripts\\movePlayer\\movePlayer.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -456,7 +496,7 @@
         }
     ],
     "script_order": [
-        
+        "c79df2ca-6d02-4012-ad66-5f5a61a5a58f"
     ],
     "tutorial": ""
 }
