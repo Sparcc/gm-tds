@@ -9,7 +9,7 @@ cooldown = 0;
 cooldownTimer = 4
 objectSpeedDefault = 1;
 objectSpeed = objectSpeedDefault;
-hp = 25;
+hp = 10;
 
 sprite_index = zombieAnimation.idle //Default animation
 image_speed = 1;

@@ -1,15 +1,57 @@
+thisInstance = instance_find(obj_player,0);
+show_debug_message(script_execute(testScript,"hi"));
+show_debug_message("This instance ID is"+string(thisInstance));
+// TODO: Use ds_map instead to make more dynamic
 enum playerAnimation {
    idle = spr_player_idle,
    walk = spr_player_walk,
    runreload = spr_player_runreload
    }
+   
+enum playerGunRecoil {
+	uzi = 1.5
+}
+
+enum playerGunRecoilCooldown {
+	uzi = 3
+}
+
+enum playerGunMaxSpread {
+	uzi = 8
+}
+
+enum playerGunMinSpread {
+	uzi = 1.1
+}
+
+enum playerReloadSize {
+	uzi = 20
+}
+
+//view_object[0]=obj_player;//object to follow
+//obj_main_game_camera.x = x;
+//obj_main_game_camera.y = y;
+//show_debug_message("camera x = "+string(obj_main_game_camera.x));
+
+
 playerMoving = true;
 playerSprinting = false;
+playerAiming = false;
 cooldown = 0;
-cooldownTimer = 4
-
+cooldownTimer = 5;
+selectedWeapon = "uzi";
 currentAnimation = playerAnimation.idle;
+playerRecoilIntensity = playerGunRecoil.uzi;
+playerRecoilCooldownIntensity = playerGunRecoilCooldown.uzi;
+playerRecoilLimit = playerGunMaxSpread.uzi;
+playerRecoilInit = playerGunMinSpread.uzi;
+playerRecoilCount = 0; // Not used yet
+playerCurrentRecoil = 0;
+playerRecoilTimer = 0;
+playerRecoilSpreadCone = 0;
 
+playerAmmoReloadSize = playerReloadSize.uzi;
+playerAmmo = playerAmmoReloadSize;
 sprite_index = currentAnimation //Default animation
 image_speed = 1;
 

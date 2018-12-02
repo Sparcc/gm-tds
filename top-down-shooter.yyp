@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "059870e0-d808-490a-a6e4-8f7d703be8ac",
+            "Value": {
+                "id": "a5f73363-120f-44f8-ad06-6d7ae937c1bc",
+                "resourcePath": "objects\\obj_main_game_camera\\obj_main_game_camera.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "066968eb-6e1f-482f-8bfe-6393d2632de2",
             "Value": {
                 "id": "741de53e-773c-4556-938a-aba7ad950e27",
@@ -132,6 +140,14 @@
                 "id": "b29173e7-65a7-4d1a-9133-7f20d6515d7f",
                 "resourcePath": "sprites\\spr_zombie_walk\\spr_zombie_walk.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "386c47d8-1039-4bdb-be82-b3f16a15f04b",
+            "Value": {
+                "id": "04cef669-3e7e-4fb5-ae4c-710788322cbb",
+                "resourcePath": "scripts\\testScript\\testScript.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -496,7 +512,8 @@
         }
     ],
     "script_order": [
-        "c79df2ca-6d02-4012-ad66-5f5a61a5a58f"
+        "c79df2ca-6d02-4012-ad66-5f5a61a5a58f",
+        "386c47d8-1039-4bdb-be82-b3f16a15f04b"
     ],
     "tutorial": ""
 }

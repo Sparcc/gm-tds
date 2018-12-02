@@ -1,13 +1,10 @@
-var 
+var moveSpeed = argument0;
+var movement_inputs = argument1;
+var playerMoving = argument2;
 
-/* super jank movement code that's meant to slip and slide, also matches a tileset mask before moving which is uber jank*/
 var seconds_passed = delta_time/1000000;
 var move_speed_this_frame = moveSpeed*seconds_passed;
 //x += move_speed_this_frame; // Testing movement
-if (global.debugPlayer && debugTimer[1] > global.debugStreamFrequency){
-	debugTimer[1] = 0;
-	show_debug_message("Time passed in seconds is " + string(seconds_passed));
-}
 
 var move_xinput = 0;
 var move_yinput = 0;
@@ -36,6 +33,10 @@ keysPressed = 0; // Reinitialise key check
  
 var moving = ( point_distance(0,0,move_xinput,move_yinput) > 0 );
 
+var x_vector = 0;
+var y_vector = 0;
+
+
 if moving  {
     var move_dir = point_direction(0,0,move_xinput,move_yinput);
 	
@@ -43,8 +44,12 @@ if moving  {
 	var spd = move_speed_this_frame;
 	var dir = move_dir;
 	 
-	var xtarg = x+lengthdir_x(spd,dir);
-	var ytarg = y+lengthdir_y(spd,dir);
+	x_vector = lengthdir_x(spd,dir);
+	y_vector = lengthdir_y(spd,dir);
+ 
+	 
+	var xtarg = x+x_vector;
+	var ytarg = y+y_vector;
 	
 	// Get tilemaps at pixel
 	var t1 = tilemap_get_at_pixel(tilemap,bbox_left, bbox_bottom) & tile_index_mask;
@@ -86,3 +91,10 @@ if moving  {
 	    }
 	}
 }
+playerVariables = ds_map_create();
+ds_map_add(playerVariables,"playerMovingMap",playerMoving);
+ds_map_add(playerVariables,"playerXVectorMap",x_vector);
+ds_map_add(playerVariables,"playerYVectorMap",y_vector);
+ds_map_add(playerVariables,"hi","hello");
+show_debug_message("ds map from move script = "+string(ds_map_read(playerVariables, "hi")));
+return playerVariables;

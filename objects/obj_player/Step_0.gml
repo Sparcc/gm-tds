@@ -1,17 +1,96 @@
-for (var i = 0; i < array_length_1d(debugTimer); i++){
-	debugTimer[i] += (delta_time/1000000);
-}
-
-
 // Orientation
 direction = point_direction(x, y, mouse_x, mouse_y);
 image_angle = direction;
 
+// Aiming and shooting
+if (mouse_check_button(mb_right)){
+	global.mainCameraFollowing = obj_crosshair;
+}else{
+	global.mainCameraFollowing = obj_player;
+}
+
+var bulletInstance = 0;
+var flashInstance = 0;
+
+if (mouse_check_button(mb_left) && !isReloading && playerAmmo >0)
+{
+	playerRecoilTimer += (delta_time/1000000);//tick up the recoil timer
+	//show_debug_message("playerRecoilTimer="+string(playerRecoilTimer));
+	if(cooldown <= 0)
+	{
+		// Set initial angle
+		var angleTarget = image_angle;
+		// Handle over recoil limit - Set to max
+		if (playerRecoilSpreadCone >= playerRecoilLimit){
+			show_debug_message("playerRecoilLimit reached");
+			playerRecoilSpreadCone = playerRecoilLimit;
+		}else{
+			// Calculate recoil and set angle
+			playerRecoilSpreadCone += playerRecoilTimer*playerRecoilIntensity; // increment recoil spread cone
+			show_debug_message("playerRecoilSpreadCone="+string(playerRecoilSpreadCone));
+		}
+		// Add recoil as + or - recoild to add, with range starting from 0 to edge of spread cone
+		var randVal = random_range(0,100);
+		if (randVal >50){
+			angleTarget += random_range(0,playerRecoilSpreadCone);
+		}else{
+			angleTarget -= random_range(0,playerRecoilSpreadCone);
+		}
+		image_angle = angleTarget;
+		
+		
+		
+		
+		/*
+		var projectile = instance_create(x, y, obj_bullet); // Create a bullet
+		var launchSpeed = 32;
+		
+		projectile.direction = image_angle; // Set movement direction to the launcher's angle
+		projectile.image_angle = image_angle; // Set projectile facing to the to the launcher's angle
+		projectile.speed = launchSpeed; // Set the speed of the projectile
+		*/
+		
+		var projectile = instance_create_layer(x, y, "Instances",obj_bullet); // Create a bullet
+		var launchSpeed = 32;
+		//projectile.image_angle = angleTarget;
+		
+		projectile.direction = image_angle; // Set movement direction to the launcher's angle
+		projectile.image_angle = image_angle; // Set projectile facing to the to the launcher's angle
+		projectile.speed = launchSpeed; // Set the speed of the projectile
+		
+		//spawn bullet and fire
+		//bulletInstance = instance_create_layer(x + lengthdir_x(30, image_angle), y + lengthdir_y(30, image_angle),"Instances", obj_bullet);
+		//var bulletInstX = bulletInstance.x;
+		//var bulletInstY = bulletInstance.y;
+		
+		flashInstance = instance_create_layer(x + lengthdir_x(64, image_angle), y + lengthdir_y(64, image_angle),"Instances", obj_muzzleflash);
+		flashInstance.direction = image_angle; // Set movement direction to the launcher's angle
+		flashInstance.image_angle = image_angle; // Set projectile facing to the to the launcher's angle
+
+		//var flashInstX = flashInstance.x;
+		//var flashInstY = flashInstance.y;
+		
+		audio_play_sound(snd_shoot, 0, 0);	
+		cooldown = cooldownTimer;
+		playerAmmo --;
+	}
+}else{
+	//tick down the recoil timer	
+	if( playerRecoilTimer -((delta_time/1000000)*playerRecoilCooldownIntensity)<playerRecoilInit){
+		playerRecoilTimer = playerRecoilInit;
+	}else{
+		playerRecoilTimer -=((delta_time/1000000)*playerRecoilCooldownIntensity);
+	}
+	playerRecoilSpreadCone = playerRecoilTimer;
+}
+cooldown += -1;
+
+for (var i = 0; i < array_length_1d(debugTimer); i++){
+	debugTimer[i] += (delta_time/1000000);
+}
 
 // Player move animation
 // Only change animation if not reloading and animation not set
-
-
 if (!isReloading && playerMoving){
 	//show_debug_message("Player is walking");
 	currentAnimation = playerAnimation.walk;
@@ -25,11 +104,11 @@ if (!isReloading && playerMoving){
 //Reloading
 if (keyboard_check(ord("R")) && !isReloading){
 	isReloading = true;
-	show_debug_message("Player is reloading");
-	
+	//show_debug_message("Player is reloading");
+	playerAmmo = playerAmmoReloadSize;
 	// Running reload animation start (will run this animation all the time)
 	if (currentAnimation != playerAnimation.runreload){
-		show_debug_message("Run animation is starting");
+		//show_debug_message("Run animation is starting");
 		currentAnimation = playerAnimation.runreload;
 		sprite_index = currentAnimation;
 	}
@@ -40,7 +119,7 @@ if (keyboard_check(ord("R")) && !isReloading){
 if (playerSprinting){
 //runSpeed = defaultSprintSpeed;
 moveSpeed = moveSpeedDefault * moveSpeedSprintMult;
-show_debug_message("Player is sprinting");
+//show_debug_message("Player is sprinting");
 image_speed = 2;
 }else{
 //runSpeed = defaultRunSpeed;
@@ -48,105 +127,21 @@ moveSpeed = moveSpeedDefault;
 image_speed = 1;
 }
 
-// Aiming and shooting
-if (mouse_check_button(mb_left) && !isReloading)
-{
-	if(cooldown <= 0)
-	{
-		//spawn bullet and fire
-		instance_create_layer(x + lengthdir_x(30, image_angle), y + lengthdir_y(30, image_angle),"Instances", obj_bullet);
-		instance_create_layer(x + lengthdir_x(64, image_angle), y + lengthdir_y(64, image_angle),"Instances", obj_muzzleflash);
-		audio_play_sound(snd_shoot, 0, 0);
-		
-		
-		cooldown = cooldownTimer;
-	}
-}
-cooldown += -1;
+/*
+---
+//var moveSpeed = argument0;
+//var movement_inputs = argument1;
+//var playerMoving = argument2;
+//return ds_map: moveSpeed,movement_inputs,playerMoving
+---
+*/
 
-/* super jank movement code that's meant to slip and slide, also matches a tileset mask before moving which is uber jank*/
-var seconds_passed = delta_time/1000000;
-var move_speed_this_frame = moveSpeed*seconds_passed;
-//x += move_speed_this_frame; // Testing movement
-if (global.debugPlayer && debugTimer[1] > global.debugStreamFrequency){
-	debugTimer[1] = 0;
-	show_debug_message("Time passed in seconds is " + string(seconds_passed));
-}
-
-var move_xinput = 0;
-var move_yinput = 0;
-var keysPressed = 0;
-// Go through each key input
-for ( var i = 0; i < array_length_1d(movement_inputs); i++){
-    var this_key = movement_inputs[i];
-    if keyboard_check(this_key) {
-		// Detect if any keys pressed then player is moving
-		keysPressed ++;
-		playerMoving = true;
-		
-		// Potential move inputs calculated from vectors
-        var this_angle = i*90;
-        move_xinput += lengthdir_x(1, this_angle);
-        move_yinput += lengthdir_y(1, this_angle);
-	}
-}
-// If no keys were pressed then player is not moving
-if (keysPressed == 0){
-	playerMoving = false;
-}
-keysPressed = 0; // Reinitialise key check
-
-
- 
-var moving = ( point_distance(0,0,move_xinput,move_yinput) > 0 );
-
-if moving  {
-    var move_dir = point_direction(0,0,move_xinput,move_yinput);
-	
-	// Begin sweep if place not free 
-	var spd = move_speed_this_frame;
-	var dir = move_dir;
-	 
-	var xtarg = x+lengthdir_x(spd,dir);
-	var ytarg = y+lengthdir_y(spd,dir);
-	
-	// Get tilemaps at pixel
-	var t1 = tilemap_get_at_pixel(tilemap,bbox_left, bbox_bottom) & tile_index_mask;
-	var t2 = tilemap_get_at_pixel(tilemap,bbox_right, bbox_bottom) & tile_index_mask;
-	var t3 = tilemap_get_at_pixel(tilemap,bbox_left, bbox_top) & tile_index_mask;
-	var t4 = tilemap_get_at_pixel(tilemap,bbox_right, bbox_bottom) & tile_index_mask;
-	
-	var tileMapAtPixel = (t1 != 0 || t2 != 0 || t2 != 0 || t4 != 0);
-	
-	// If can place
-	if (place_free(xtarg,ytarg)) {
-	    x = xtarg;
-	    y = ytarg;
-		
-		// Check collision 
-			
-		
-	}// If can't place
-	else {
-	    var sweep_interval = 10;
-	    // Sweep every 10 degrees
-	    for ( var angle = sweep_interval; angle <= 80; angle += sweep_interval) {
-			
-			// E.g. -10, 10, 20
-	        for ( var multiplier = -1; multiplier <= 1; multiplier += 2) {      
-	            var angle_to_check = dir+angle*multiplier;
-				
-				//  Check location with angle
-	            xtarg = x+lengthdir_x(spd, angle_to_check);
-	            ytarg = y+lengthdir_y(spd, angle_to_check);
-				
-				// Can we place now?
-	            if (place_free(xtarg,ytarg)) {
-	                x = xtarg;
-	                y = ytarg;  
-	                exit;       
-	            }   
-	        }
-	    }
-	}
-}
+//playerVariables = ds_map_create();
+//ds_map_copy(playerVariables, ds_map_copy
+playerVariables = script_execute(movePlayer,moveSpeed,movement_inputs,playerMoving);
+//show_debug_message("ds map from move script = "+string(ds_map_read(playerVariables, "hi")));
+//playerMoving = ds_map_read(playerVariables, "playerMovingMap");
+//show_debug_message("playerMoving="+string(playerMoving));
+//update position of spawn instances according to player movement
+//(flashInstance).x += ds_map_read(playerVariables, "playerXVectorMap");
+//(flashInstance).y += ds_map_read(playerVariables, "playerYVectorMap");
