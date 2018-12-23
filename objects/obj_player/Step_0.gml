@@ -136,12 +136,11 @@ image_speed = 1;
 ---
 */
 
-//playerVariables = ds_map_create();
-//ds_map_copy(playerVariables, ds_map_copy
 playerVariables = script_execute(movePlayer,moveSpeed,movement_inputs,playerMoving);
-//show_debug_message("ds map from move script = "+string(ds_map_read(playerVariables, "hi")));
-//playerMoving = ds_map_read(playerVariables, "playerMovingMap");
-//show_debug_message("playerMoving="+string(playerMoving));
+
+playerMoving = playerVariables[? "playerMovingMap"];
+
+
 //update position of spawn instances according to player movement
-//(flashInstance).x += ds_map_read(playerVariables, "playerXVectorMap");
-//(flashInstance).y += ds_map_read(playerVariables, "playerYVectorMap");
+(flashInstance).x += playerVariables[? "playerXVectorMap"];
+(flashInstance).y += playerVariables[? "playerYVectorMap"];
