@@ -95,9 +95,6 @@ playerVariables = ds_map_create();
 ds_map_add(playerVariables,"playerMovingMap",playerMoving);
 ds_map_add(playerVariables,"playerXVectorMap",x_vector);
 ds_map_add(playerVariables,"playerYVectorMap",y_vector);
-<<<<<<< HEAD
-=======
-ds_map_add(playerVariables,"hi","hello");
+//ds_map_add(playerVariables,"hi","hello");
 show_debug_message("ds map from move script = "+string(ds_map_read(playerVariables, "hi")));
->>>>>>> parent of 217da4a... fixed broken move animation
 return playerVariables;
