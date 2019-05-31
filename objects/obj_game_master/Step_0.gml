@@ -1,4 +1,6 @@
-
+global.mainCameraPosX = obj_player.x;
+global.mainCameraPosY = obj_player.y;
+/*
 if (global.mainCameraFollowing == obj_player){
 	global.mainCameraPosX = obj_player.x;
 	global.mainCameraPosY = obj_player.y;
@@ -6,3 +8,4 @@ if (global.mainCameraFollowing == obj_player){
 	global.mainCameraPosX = obj_crosshair.x;
 	global.mainCameraPosY = obj_crosshair.y;
 }
+*/

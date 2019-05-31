@@ -9,6 +9,7 @@ if (mouse_check_button(mb_right)){
 	global.mainCameraFollowing = obj_player;
 }
 
+
 var bulletInstance = 0;
 var flashInstance = 0;
 
@@ -144,3 +145,14 @@ playerMoving = playerVariables[? "playerMovingMap"];
 //update position of spawn instances according to player movement
 (flashInstance).x += playerVariables[? "playerXVectorMap"];
 (flashInstance).y += playerVariables[? "playerYVectorMap"];
+
+/*
+if (mouse_check_button(mb_right)){
+	obj_main_game_camera.x +=playerVariables[? "playerXVectorMap"];
+	obj_main_game_camera.y +=playerVariables[? "playerYVectorMap"];
+}else{
+	
+	obj_main_game_camera.x = global.mainCameraPosX;
+	obj_main_game_camera.y = global.mainCameraPosY;
+}
+*/

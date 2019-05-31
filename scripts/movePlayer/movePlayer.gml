@@ -84,7 +84,7 @@ if moving  {
 				// Can we place now?
 	            if (place_free(xtarg,ytarg)) {
 	                x = xtarg;
-	                y = ytarg;  
+	                y = ytarg; 
 	                exit;       
 	            }   
 	        }
