@@ -95,5 +95,4 @@ playerVariables = ds_map_create();
 ds_map_add(playerVariables,"playerMovingMap",playerMoving);
 ds_map_add(playerVariables,"playerXVectorMap",x_vector);
 ds_map_add(playerVariables,"playerYVectorMap",y_vector);
-
 return playerVariables;

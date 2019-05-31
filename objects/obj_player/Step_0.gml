@@ -137,12 +137,14 @@ image_speed = 1;
 ---
 */
 
+//playerVariables = ds_map_create();
+//ds_map_copy(playerVariables, ds_map_copy
 playerVariables = script_execute(movePlayer,moveSpeed,movement_inputs,playerMoving);
-
-playerMoving = playerVariables[? "playerMovingMap"];
-
-
+//show_debug_message("ds map from move script = "+string(ds_map_read(playerVariables, "hi")));
+//playerMoving = ds_map_read(playerVariables, "playerMovingMap");
+//show_debug_message("playerMoving="+string(playerMoving));
 //update position of spawn instances according to player movement
+<<<<<<< HEAD
 (flashInstance).x += playerVariables[? "playerXVectorMap"];
 (flashInstance).y += playerVariables[? "playerYVectorMap"];
 
@@ -156,3 +158,7 @@ if (mouse_check_button(mb_right)){
 	obj_main_game_camera.y = global.mainCameraPosY;
 }
 */
+=======
+//(flashInstance).x += ds_map_read(playerVariables, "playerXVectorMap");
+//(flashInstance).y += ds_map_read(playerVariables, "playerYVectorMap");
+>>>>>>> parent of 217da4a... fixed broken move animation
